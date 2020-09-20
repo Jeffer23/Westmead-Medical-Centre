@@ -1,0 +1,36 @@
+.doctorAvailabilityDiv{
+    display: inline-block;
+    width: 100%;
+}
+
+.doctorAvailabilityDiv h2{
+    text-align: center;
+}
+
+.row {
+    width: 100%;
+    text-align: center;
+}
+
+.row mat-form-field{
+    padding-left: 5%;
+}
+
+.mat-select-value, .mat-select-arrow, .mat-form-field-label{
+    color: black !important;
+}
+
+.time{
+    margin-left:5%;
+    margin-right:5%;
+    margin-top:2%;
+}
+
+.shift{
+    width: 20%;
+}
+
+.action{
+    margin-top: 5%
+}
+

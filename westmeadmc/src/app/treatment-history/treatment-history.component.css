@@ -1,0 +1,19 @@
+table {
+    width: 100%;
+    
+  }
+
+#treatmentTable {
+    margin-top: 2%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+h1 {
+    text-align: center;
+    color: #3f51b5;
+}
+
+.mat-select-value {
+    color: black !important;
+}

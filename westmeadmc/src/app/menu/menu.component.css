@@ -1,0 +1,17 @@
+h1{
+    float: left;
+    color: white;
+    margin-top: 2vh;
+}
+
+button {
+    float: right;
+    margin-top: 2vh;
+    color: white;
+}
+
+.logo{
+    height: 66px;
+    width: 66px;
+    float: left;
+}

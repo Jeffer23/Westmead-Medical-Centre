@@ -49,9 +49,9 @@ export class RegistrationComponent implements OnInit {
 
   private showSnackBar(msg1: string, msg2?: string){
     this._snackBar.open(msg1, msg2, {
-      duration: 1000,
+      duration: 3000,
       horizontalPosition: 'center',
-      verticalPosition: 'top',
+      verticalPosition: 'bottom',
     });
   }
 

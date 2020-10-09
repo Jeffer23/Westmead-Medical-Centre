@@ -3,7 +3,7 @@
 
 
 <button mat-button [matMenuTriggerFor]="login" *ngIf="!isUserLoggedIn">
-    <mat-icon>person</mat-icon>
+    <mat-icon class="user">person</mat-icon>
     Signup/SignIn
 </button>
 <mat-menu #login="matMenu" yPosition="below" >
@@ -23,10 +23,10 @@
 </mat-menu>
 
 <button mat-button [matMenuTriggerFor]="userMenu" *ngIf="isUserLoggedIn">
-  <mat-icon>person</mat-icon>
+  <mat-icon class="user">person</mat-icon>
   Hi, {{user.lastName}}
 </button>
-<mat-menu #userMenu="matMenu" yPosition="below" >
+<mat-menu #userMenu="matMenu" yPosition="below" class="headerMenu">
     
     <button mat-menu-item routerLink="/appointment" *ngIf="userType == 'admin'">
       <mat-icon>assignment</mat-icon>
@@ -44,13 +44,18 @@
       <mat-icon>assignment</mat-icon>
         Book Appointment
     </button>
-    <button mat-menu-item routerLink="/treatmentHistory" *ngIf="userType == 'patient'">
-      <mat-icon>history</mat-icon>
-        View treatment history
-    </button>
+    
     <button mat-menu-item routerLink="/doctorAvailability" *ngIf="userType == 'doctor'">
       <mat-icon>add_alarm</mat-icon>
         Add Availability
+    </button>
+    <button mat-menu-item routerLink="/treatmentHistory" *ngIf="userType != 'doctor'">
+      <mat-icon>history</mat-icon>
+        <span>View treatment history</span>
+    </button>
+    <button mat-menu-item routerLink="/view-appointment" *ngIf="userType == 'doctor'">
+      <mat-icon>view_day</mat-icon>
+        View Appointment
     </button>
     <button mat-menu-item routerLink="/manage-account">
         <mat-icon>settings</mat-icon>
@@ -61,6 +66,15 @@
         Sign out
     </button>
 </mat-menu>
+<button mat-button routerLink="/left-pane">
+  Services
+</button>
+<button mat-button routerLink="/right-pane">
+  Contact us
+</button>
+<button mat-button routerLink="/our-staff">
+  Our Doctors
+</button>
 <button mat-button routerLink="/about-us">
     About us
 </button>

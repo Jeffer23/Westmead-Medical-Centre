@@ -3,6 +3,7 @@ package com.westmead.controller;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.westmead.document.Patient;
+import com.westmead.dto.AppointmentDTO;
 import com.westmead.exception.BookingAppointmentFailureException;
 import com.westmead.exception.LoginFailureException;
 import com.westmead.exception.RegistrationFailureException;
@@ -24,8 +26,6 @@ import com.westmead.service.PatientService;
 @RestController
 @RequestMapping("/patient")
 public class PatientController {
-
-	private static final DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	
 	@Autowired
 	private PatientService patientService;
@@ -44,9 +44,29 @@ public class PatientController {
 	@PostMapping("/bookAppointment")
 	public boolean bookAppointment(@RequestParam String patientId, @RequestParam String doctorId,
 			@RequestParam String date, @RequestParam String time, @RequestParam String reason) throws BookingAppointmentFailureException {
-		return this.patientService.bookAppointment(patientId, doctorId, LocalDate.parse(date, DATEFORMATTER), LocalTime.parse(time), reason);
+		return this.patientService.bookAppointment(patientId, doctorId, LocalDate.parse(date), LocalTime.parse(time), reason, null);
+	}
+	
+	@PostMapping("/update")
+	public void updatePatient(@RequestBody Patient patient) {
+		this.patientService.updatePatient(patient);
 	}
 
+	@GetMapping("/getAppointments")
+	public List<AppointmentDTO> getAppointments(@RequestParam String patientId) {
+		return this.patientService.getAppointments(patientId);
+	}
+	
+	@GetMapping("/cancelAppointment")
+	public boolean cancelAppointment(@RequestParam String appointmentId) {
+		return this.patientService.cancelAppointment(appointmentId);
+	}
+	
+	@GetMapping("/test")
+	public String test(@RequestParam String propertyName) {
+		return this.patientService.test(propertyName);
+	}
+	
 	@GetMapping
 	public String test() {
 		return "Patient service working";

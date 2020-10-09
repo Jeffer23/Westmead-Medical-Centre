@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { session_isUserLoggedIn } from '../Constants';
+import {MatDialog} from '@angular/material/dialog';
+import { LoginComponent } from '../login/login.component';
+import { Router } from '@angular/router';
+import { session_user_type } from '../Constants';
 
 @Component({
   selector: 'app-center-pane',
@@ -7,34 +12,49 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CenterPaneComponent implements OnInit {
 
-  constructor() { }
+    isUserLoggedIn:string;
+    isDoctor : boolean;
+  constructor(public dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
+    this.isUserLoggedIn = JSON.parse(sessionStorage.getItem(session_isUserLoggedIn));
+    this.isDoctor = (sessionStorage.getItem(session_user_type) == "doctor");
   }
-  imageObject = [{
-    image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/5.jpg',
-    thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/5.jpg',
-    title: 'Dr. Steve MBBS.'
+  imageObject = [ {
+    image: 'http://localhost:8080/assets/images/banners/banner1.png',
+    thumbImage : 'http://localhost:8080/assets/images/banners/banner1.png'
 }, {
-    image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/9.jpg',
-    thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/9.jpg',
-    title: 'Dr. Mark MBBS.'
+    image: 'http://localhost:8080/assets/images/banners/banner2.png',
+    thumbImage : 'http://localhost:8080/assets/images/banners/banner2.png'
 }, {
-    image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/4.jpg',
-    thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/4.jpg',
-    title: 'Dr. Warner MBBS.'
+    image: 'http://localhost:8080/assets/images/banners/banner3.png',
+    thumbImage : 'http://localhost:8080/assets/images/banners/banner3.png'
 },{
-    image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/7.jpg',
-    thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/7.jpg',
-    title: 'Dr. Ricky MBBS.'
-}, {
-    image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/1.jpg',
-    thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/1.jpg',
-    title: 'Dr. Lee MBBS.'
-}, {
-    image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/2.jpg',
-    thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/2.jpg',
-    title: 'Dr. Maxwell MBBS.'
+    image: 'http://localhost:8080/assets/images/banners/banner4.png',
+    thumbImage : 'http://localhost:8080/assets/images/banners/banner4.png'
 }];
+
+
+    bookAppointment(){
+        if(this.isUserLoggedIn){
+            this.router.navigate(['/', 'appointment']);
+        } else {
+            this.openLoginDialog();
+        }
+    }
+
+    viewAppointments(){
+        if(this.isUserLoggedIn){
+            this.router.navigate(['/', 'view-appointment']);
+        } else {
+            this.openLoginDialog();
+        }
+    }
+
+    openLoginDialog():void{
+        const dialogRef = this.dialog.open(LoginComponent, {
+          width: '300px'
+        });
+      }
 
 }

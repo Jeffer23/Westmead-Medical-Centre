@@ -22,12 +22,12 @@ div {
 
 #centerPane {
     height: 90vh;
-    width: 60%;
+    width: 100%;
     /*background-color: chartreuse;*/
 }
 
 #rightPane{
     height: 90vh;
     width:20%;
-    background-color: floralwhite;
+    background-color: azure;
 }

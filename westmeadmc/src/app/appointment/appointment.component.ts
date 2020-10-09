@@ -30,46 +30,31 @@ export class AppointmentComponent implements OnInit {
   unModifiableDoctors:UserDTO[]=[];
   doctorColumns: string[] = ['firstName', 'lastName', 'age', 'gender', 'qualification', 'experience'];
 
-  appointmentHistoryColumns: string[] = ['index', 'dateTime', 'doctorName', 'status', 'billDetails'];
+  appointmentHistoryColumns: string[] = ['index', 'date', 'time', 'doctorName', 'reason', 'action'];
   appointments:MatTableDataSource<AppointmentDTO>;
 
   @ViewChildren(MatPaginator) paginators: QueryList<MatPaginator>;
   times:TimeDTO[]=[];
+  user:UserDTO;
   constructor(private userService: UserService, private snackBar: MatSnackBar, public dialog: MatDialog,private router: Router) { }
 
   ngOnInit(): void {
-    
-    var appointment:AppointmentDTO = new AppointmentDTO();
-    appointment.billDetails = "$50.00"
-    appointment.dateTime = "2020-09-05 2:30 pm";
-    appointment.doctorName = "Dr. Mannivanan MBBS";
-    appointment.status = "Completed";
-
-    this.appointments =  new MatTableDataSource<AppointmentDTO>();
-    this.appointments.data.push(appointment);
+    this.user = JSON.parse(sessionStorage.getItem(session_user_key));
 
     this.selectedDoctor = new UserDTO();
     this.selectedDate = new Date();
     this.selectedTime = new TimeDTO();
     this.doctors = new MatTableDataSource<UserDTO>();
     this.isAdmin = (sessionStorage.getItem(session_user_type) == "admin");
-    this.userService.getApprovedDoctors().subscribe(resp=>{
-      this.unModifiableDoctors = resp;
-      var date:string = this.getDateAsString(this.selectedDate);
-      var doctors:UserDTO[] = [];
-      this.unModifiableDoctors.forEach(doctorEle=>{
-        if(doctorEle.availableTimes[date]){
-          doctors.push(doctorEle);
-        }
-      });
-      this.doctors.data = doctors;
-    })
+   
+    this.loadApprovedDoctors();
+    this.loadAppointmentHistory();
     
   }
 
   ngAfterViewInit() {
     this.doctors.paginator = this.paginators.first;
-    this.appointments.paginator = this.paginators.last;
+   
   }
 
   applyFilter(event: Event) {
@@ -80,6 +65,20 @@ export class AppointmentComponent implements OnInit {
   doctorApplyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.doctors.filter = filterValue.trim().toLowerCase();
+  }
+
+  private loadApprovedDoctors(){
+    this.userService.getApprovedDoctors().subscribe(resp=>{
+      this.unModifiableDoctors = resp;
+      var date:string = this.getDateAsString(this.selectedDate);
+      var doctors:UserDTO[] = [];
+      this.unModifiableDoctors.forEach(doctorEle=>{
+        if(doctorEle.availableTimes[date]){
+          doctors.push(doctorEle);
+        }
+      });
+      this.doctors.data = doctors;
+    });
   }
 
   onSelectDoctor(doctor:UserDTO){
@@ -146,14 +145,18 @@ export class AppointmentComponent implements OnInit {
 
   bookAppointment(){
     if(this.validateBookAppointment()){
-      var patient:UserDTO = JSON.parse(sessionStorage.getItem(session_user_key));
       var patientEmailId;
+      var adminId;
+      var userType;
       if(this.isAdmin){
         patientEmailId = this.patientId;
+        adminId = this.user.emailId;
+        userType = "admin";
       } else {
-        patientEmailId = patient.emailId;
+        patientEmailId = this.user.emailId;
+        userType = "patient";
       }
-      this.userService.bookAppointment(patientEmailId, this.selectedDoctor.emailId, this.getDateAsString(this.selectedDate), this.selectedTime.time, this.reason).subscribe(resp=>{
+      this.userService.bookAppointment(patientEmailId, this.selectedDoctor.emailId, this.getDateAsString(this.selectedDate), this.selectedTime.time, this.reason, userType, adminId).subscribe(resp=>{
         if(resp){
           this.showSnackBar("Appointment Booked Successfully");
           this.router.navigate(["/"]);
@@ -188,9 +191,9 @@ export class AppointmentComponent implements OnInit {
 
   private showSnackBar(msg1: string, msg2?: string){
     this.snackBar.open(msg1, msg2, {
-      duration: 1000,
+      duration: 3000,
       horizontalPosition: 'center',
-      verticalPosition: 'top',
+      verticalPosition: 'bottom',
     });
   }
 
@@ -198,5 +201,76 @@ export class AppointmentComponent implements OnInit {
     const dialogRef = this.dialog.open(BookingTermsAndConditonsDialogComponent, {
       width: '500px'
     });
+  }
+
+  public loadAppointmentHistory(){
+    var patientEmailId;
+    if(this.isAdmin){
+      patientEmailId = this.patientId;
+    } else {
+      patientEmailId = this.user.emailId;
+    }
+    this.userService.getAppointments(patientEmailId, "patient").subscribe(resp=>{
+      this.appointments =  new MatTableDataSource<AppointmentDTO>(resp);
+      this.appointments.paginator = this.paginators.last;
+    }, err=>{
+        this.showSnackBar("Something went wrong!!");
+    });
+  }
+  public getReadableDate(time: string){
+    return time.substring(0, time.indexOf("T"));
+  }
+
+  public getReadableTime(time: string){
+    var minutes = time.substring(time.indexOf("T") + 4, 16);
+    var hour = time.substr(time.indexOf("T") + 1, 13);
+    var ampm = " AM";
+    var hourInt: number = parseInt(hour);
+    if (hourInt> 11) {
+      ampm = " PM";
+      if(hourInt != 12)
+        hourInt = hourInt - 12;
+    }
+
+    var displayTime;
+    if(hourInt < 10){
+      displayTime = "0" + hourInt + ":" + minutes + " " + ampm;
+    } else {
+      displayTime = hourInt + ":" + minutes + " " + ampm;
+    }
+
+    return displayTime;
+  }
+
+  isCancelAvailable(date: string){
+    var today = new Date();
+    var dateArr: string[] = date.split("-");
+    if(today.getFullYear() > parseInt(dateArr[0])){
+      return false;
+    } else if(today.getFullYear() == parseInt(dateArr[0]) && (today.getMonth() + 1) > parseInt(dateArr[1])){
+      return false;
+    } else if(today.getFullYear() == parseInt(dateArr[0]) && (today.getMonth() + 1) == parseInt(dateArr[1]) && today.getDate() > parseInt(dateArr[2])){
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  onCancelAppointment(appointment: AppointmentDTO){
+    this.userService.cancelAppointment(appointment.appointmentId).subscribe(resp=>{
+      if(resp){
+        this.refreshPageData();
+        this.showSnackBar("Appointment cancelled Successfully");
+      } else {
+        this.showSnackBar("Appointment Cancellation failed");
+      }
+    }, err=>{
+      this.showSnackBar("Something went wrong!!");
+    })
+  }
+
+  private refreshPageData(){
+      this.loadAppointmentHistory();
+      this.loadApprovedDoctors();
   }
 }

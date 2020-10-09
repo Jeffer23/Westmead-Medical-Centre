@@ -18,8 +18,6 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.westmead.repository.converter.CalendarReadConverter;
 import com.westmead.repository.converter.CalendarWriteConverter;
-import com.westmead.repository.converter.LocalTimeReadConverter;
-import com.westmead.repository.converter.LocalDateReadConvertor;
 
 @Configuration
 public class MongoConfig extends AbstractMongoClientConfiguration {
@@ -47,8 +45,6 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 	public MongoCustomConversions customConversions() {
 		converters.add(new CalendarReadConverter());
 		converters.add(new CalendarWriteConverter());
-		converters.add(new LocalDateReadConvertor());
-		converters.add(new LocalTimeReadConverter());
 		return new MongoCustomConversions(converters);
 	}
 

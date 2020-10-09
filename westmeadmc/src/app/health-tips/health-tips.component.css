@@ -5,3 +5,7 @@ h1{
 #health{
     background-color: azure;
 }
+
+.health-tip{
+    margin-top: -16%;
+}

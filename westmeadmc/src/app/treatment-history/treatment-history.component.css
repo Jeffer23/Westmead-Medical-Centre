@@ -3,17 +3,31 @@ table {
     
   }
 
-#treatmentTable {
+#treatmentDiv {
     margin-top: 2%;
     padding-left: 10%;
     padding-right: 10%;
+    background-color: azure;
 }
 
-h1 {
-    text-align: center;
+h2 {
+    background-color: #f7f7f7 !important;
+    font-size: 30px;
+    font-weight: 400;
+    color: black;
+    text-align: left;
+    /*padding-top: 2%;*/
+    padding-left: 2%;
+}
+
+a{
+    padding-left: 20px;
+}
+
+.card{
+    margin-bottom: 30px !important;
+}
+
+.mat-form-field-label{
     color: #3f51b5;
-}
-
-.mat-select-value {
-    color: black !important;
 }

@@ -1,6 +1,6 @@
 export class TreatmentDTO {
-    dateTime: string;
-    doctorName: string;
+    bill: any;
     comment: string;
-    documentLink: string;
+    docs: string[];
 }
+

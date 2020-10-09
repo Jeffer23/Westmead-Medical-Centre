@@ -9,6 +9,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.key.LocalDateKeyDeserializer;
+
 @Document
 public class Doctor {
 
@@ -29,8 +32,9 @@ public class Doctor {
 	public Doctor() {
 		this.approval = new Approval();
 		this.availableTimes = new ConcurrentHashMap<LocalDate, List<AvailableTime>>();
-		this.imageURL = "assets/images/default_doctor.jpg";
+		this.imageURL = "assets/images/doctors/default_doctor.jpg";
 	}
+	
 	public String getFirstName() {
 		return firstName;
 	}

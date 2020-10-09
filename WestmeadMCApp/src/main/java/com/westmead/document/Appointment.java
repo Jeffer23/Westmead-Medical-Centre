@@ -1,6 +1,8 @@
 package com.westmead.document;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -10,7 +12,8 @@ public class Appointment {
 
 	@Id
 	private String appointmentId;
-	private LocalDateTime appointmentTime;
+	private LocalDate appointmentDate;
+	private LocalTime appointmentTime;
 	private String patientId;
 	private String doctorId;
 	private String reason;
@@ -23,10 +26,17 @@ public class Appointment {
 	public void setAppointmentId(String appointmentId) {
 		this.appointmentId = appointmentId;
 	}
-	public LocalDateTime getAppointmentTime() {
+
+	public LocalDate getAppointmentDate() {
+		return appointmentDate;
+	}
+	public void setAppointmentDate(LocalDate appointmentDate) {
+		this.appointmentDate = appointmentDate;
+	}
+	public LocalTime getAppointmentTime() {
 		return appointmentTime;
 	}
-	public void setAppointmentTime(LocalDateTime appointmentTime) {
+	public void setAppointmentTime(LocalTime appointmentTime) {
 		this.appointmentTime = appointmentTime;
 	}
 	public String getPatientId() {
@@ -61,9 +71,9 @@ public class Appointment {
 	}
 	@Override
 	public String toString() {
-		return "Appointment [appointmentId=" + appointmentId + ", appointmentTime=" + appointmentTime + ", patientId="
-				+ patientId + ", doctorId=" + doctorId + ", reason=" + reason + ", bookedBy=" + bookedBy
-				+ ", treatment=" + treatment + "]";
+		return "Appointment [appointmentId=" + appointmentId + ", appointmentDate=" + appointmentDate
+				+ ", appointmentTime=" + appointmentTime + ", patientId=" + patientId + ", doctorId=" + doctorId
+				+ ", reason=" + reason + ", bookedBy=" + bookedBy + ", treatment=" + treatment + "]";
 	}
 	
 	

@@ -4,7 +4,7 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .mat-menu-below{
-    background-color: #3f51b5;
+    background-color: #00adee !important;
 }
 
 .mat-dialog-container {
@@ -50,7 +50,6 @@ app-home {
     color: white !important;
 }
 
-.mat-form-field.mat-focused .mat-form-field-underline{
-    height: 1px;
-    background-color: red !important;
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+    text-align: center !important;
 }

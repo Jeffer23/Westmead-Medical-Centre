@@ -22,6 +22,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSortModule} from '@angular/material/sort';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -41,6 +42,9 @@ import { ManageAccountComponent } from './manage-account/manage-account.componen
 import { AdminApprovalComponent } from './admin-approval/admin-approval.component';
 import { BookingTermsAndConditonsDialogComponent } from './booking-terms-and-conditons-dialog/booking-terms-and-conditons-dialog.component';
 import { DoctorAvailabilityComponent } from './doctor-availability/doctor-availability.component';
+import { ViewAppointmentComponent } from './view-appointment/view-appointment.component';
+import { AddTreatmentComponent } from './add-treatement/add-treatment.component';
+import { OurDoctorsComponent } from './our-doctors/our-doctors.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +63,10 @@ import { DoctorAvailabilityComponent } from './doctor-availability/doctor-availa
     ManageAccountComponent,
     AdminApprovalComponent,
     BookingTermsAndConditonsDialogComponent,
-    DoctorAvailabilityComponent
+    DoctorAvailabilityComponent,
+    ViewAppointmentComponent,
+    AddTreatmentComponent,
+    OurDoctorsComponent
   ],
   imports: [
     BrowserModule,
@@ -85,7 +92,8 @@ import { DoctorAvailabilityComponent } from './doctor-availability/doctor-availa
     MatCardModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSortModule
   ],
   providers: [{provide : LocationStrategy , useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]

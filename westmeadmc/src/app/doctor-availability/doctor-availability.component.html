@@ -1,6 +1,6 @@
+<h2>Add Doctor Availability</h2>
 <div class="doctorAvailabilityDiv">
-    <h2>Add Doctor Availability</h2>
-    <div class="row">
+    <div class="availabilityRow">
         <mat-form-field appearance="fill" color="primary" *ngIf="isAdmin">
             <mat-label>Doctor Email Address</mat-label>
             <input matInput [(ngModel)]="doctorId" (blur)="onBlurDoctorId()">
@@ -22,10 +22,10 @@
             </mat-select>
         </mat-form-field>
     </div>
-    <div class="row time-row">
+    <div class="availabilityRow time-row">
         <button mat-raised-button [disabled]="time.appointmentId" *ngFor="let time of times;" (click)="onTimeClick(time)" [color]="getColor(time)" class="time">{{time.time.slice(0, 5)}}</button>
     </div>
-    <div class="row">
+    <div class="availabilityRow">
         <button mat-flat-button color="warn" class="action" (click)="addAvailability()">Add Availability</button>
     </div>
 </div>

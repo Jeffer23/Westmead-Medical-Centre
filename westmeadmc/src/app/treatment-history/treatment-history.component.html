@@ -1,37 +1,21 @@
-<div id="treatmentTable">
-    <h1>Treatment History</h1>
-    <mat-form-field>
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Doctor Name" #input>
-      </mat-form-field>
-    <table mat-table [dataSource]="treatments" class="mat-elevation-z8">
-        <ng-container matColumnDef="index">
-            <th mat-header-cell *matHeaderCellDef> Index </th>
-            <td mat-cell *matCellDef="let element"> {{treatments.filteredData.indexOf(element) + 1}} </td>
-          </ng-container>
-          
-        <ng-container matColumnDef="dateTime">
-            <th mat-header-cell *matHeaderCellDef> Date & Time </th>
-            <td mat-cell *matCellDef="let element"> {{element.dateTime}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="doctorName">
-            <th mat-header-cell *matHeaderCellDef> Doctor Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.doctorName}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="comment">
-            <th mat-header-cell *matHeaderCellDef> Comments </th>
-            <td mat-cell *matCellDef="let element"> {{element.comment}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="documentLink">
-            <th mat-header-cell *matHeaderCellDef> Document Link </th>
-            <td mat-cell *matCellDef="let element"> <a [href]="element.documentLink">Scan Report</a> </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+<h2>Treatment History</h2>
+<div id="treatmentDiv">
+    <mat-form-field appearance="fill" color="primary" *ngIf="isAdmin">
+        <mat-label>Patient Email Address</mat-label>
+        <input matInput [(ngModel)]="patientId" (blur)="onBlurLoadAppointments()">
+    </mat-form-field>
+    <div *ngFor="let appointment of appointments;" >
+        <mat-card class="treatment-card" *ngIf="appointment.treatment" class="card">
+            <mat-card-header>
+                <mat-card-title>{{appointment.appointmentTime}}</mat-card-title>
+                <mat-card-subtitle>{{appointment.doctor.lastName }}  {{appointment.doctor.firstName}} {{appointment.doctor.qualification}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+            {{appointment.treatment.comment}}
+            </mat-card-content>
+            <mat-card-actions>
+                <a target="_blank" [href]="getDocsURL(appointment.appointmentId, doc)" *ngFor="let doc of appointment.treatment.docs;">{{doc}}</a>
+            </mat-card-actions>
+        </mat-card>
+    </div>
 </div>

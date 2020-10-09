@@ -11,7 +11,7 @@ export class UserDTO {
     qualification: string; //Only for Doctor
     experience: number; //Only for Doctor
     imageURL : string; // Only for Doctor 
-    highlighted:boolean = false; // Only for Doctor
+    highlighted?:boolean = false; // Only for Doctor
     approval : Approval; // Only for Doctor and Admin
     availableTimes: Map<string, TimeDTO[]>;
   }

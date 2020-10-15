@@ -1,6 +1,7 @@
 .appointmentDiv{
     display: inline-block;
     width: 100%;
+    margin-top: 10vh;
 }
 
 table {

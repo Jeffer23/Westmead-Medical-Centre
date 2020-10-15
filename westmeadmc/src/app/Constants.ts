@@ -1,7 +1,7 @@
 export const session_user_key= "user";
 export const session_isUserLoggedIn = "isUserLoggedIn";
 export const session_user_type = "userType";
-export const host = "http://localhost:8080/";
+export const host = "http://" + location.hostname + ":8080/";
 export const register_service_url = host + "WestmeadMC/<USER_TYPE>/register";
 export const login_service_url = host + "WestmeadMC/<USER_TYPE>/login";
 export const get_non_approved_user_url = host + "WestmeadMC/<USER_TYPE>/getNonApproved";

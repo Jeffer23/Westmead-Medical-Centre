@@ -8,16 +8,14 @@ table {
     padding-left: 10%;
     padding-right: 10%;
     background-color: azure;
+    height: 90vh;
 }
 
 h2 {
     background-color: #f7f7f7 !important;
-    font-size: 30px;
-    font-weight: 400;
-    color: black;
     text-align: left;
-    /*padding-top: 2%;*/
     padding-left: 2%;
+    margin-top: 10vh !important;
 }
 
 a{

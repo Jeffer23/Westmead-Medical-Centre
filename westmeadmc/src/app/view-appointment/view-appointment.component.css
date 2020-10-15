@@ -2,12 +2,14 @@
     display: inline-block;
     width: 100%;
     text-align: center;
+    height: 80vh;
 }
 
 h2 {
     background-color: #f7f7f7 !important;
     text-align: left;
     padding-left: 2%;
+    margin-top: 10vh !important;
 }
 
 .row-two{

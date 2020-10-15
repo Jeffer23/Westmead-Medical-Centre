@@ -11,7 +11,7 @@ button {
 }
 
 .logo{
-    height: 66px;
+    height: 60px;
     width: 66px;
     float: left;
 }
@@ -23,8 +23,3 @@ button {
 .headerMenu {
     background-color: #3f51b5 !important;
 }
-
-ul {
-    justify-content: center;
-    display: flex;
-  }

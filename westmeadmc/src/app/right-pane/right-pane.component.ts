@@ -14,10 +14,7 @@ export class RightPaneComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    var container = document.getElementById('contactDiv');
-    var rowToScrollTo = document.getElementById('map');
-
-    container.scrollTop = rowToScrollTo.offsetTop;
+   
   }
 
 }
